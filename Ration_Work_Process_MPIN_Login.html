@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ration Work Process Data</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --navy:#06356f;--blue:#087fd3;--cyan:#16b7d5;--green:#0ba55b;
+  --purple:#5730b8;--red:#ed2450;--text:#153a72;--line:#cbd9e8;
+}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#eefaff,#f8fcff 55%,#e8f7fb);color:#18355e;min-height:100vh}
+.container{width:100%;max-width:1540px;margin:auto;padding:0 28px 24px}
+.topbar{
+  min-height:118px;background:linear-gradient(110deg,#062f68 0%,#07518e 52%,#07316b 100%);
+  color:#fff;display:flex;align-items:center;justify-content:space-between;
+  padding:18px 55px 16px;border-radius:0 0 8px 8px;box-shadow:0 5px 18px #0a427455;
+  position:relative;overflow:hidden
+}
+.topbar:before{content:"";position:absolute;right:15%;top:-80px;width:420px;height:230px;border-radius:50%;border:28px solid #1ec4e7;transform:rotate(-28deg);opacity:.45}
+.brand{display:flex;align-items:center;gap:18px;z-index:1}
+.logo{font-size:56px;line-height:1}
+.brand h1{font-size:38px;margin:0;font-weight:800;letter-spacing:-1px}
+.brand h1 span{color:#ffe52d}
+.nav{font-size:20px;font-weight:700;color:#9ce9ff;margin-top:8px}
+.nav span{margin:0 18px;color:#fff}
+.slogan{z-index:1;text-align:center;font-size:21px;font-weight:800;line-height:1.25}
+.slogan .home{font-size:57px;display:block;line-height:1;margin-bottom:4px}
+.slogan b{color:#ffe52d}
+
+.panel{background:#fff;border:1px solid #cfe0ed;border-radius:18px;box-shadow:0 5px 20px #427ba522;margin-top:18px;overflow:hidden}
+.form-panel{padding:0 18px 20px;position:relative}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:0 -1px 15px}
+.title-ribbon{
+  background:linear-gradient(100deg,#087d8e,#10bba6);color:#fff;
+  border-radius:0 0 25px 25px;padding:13px 28px 13px 18px;font-size:28px;font-weight:800;
+  clip-path:polygon(0 0,100% 0,94% 100%,0 100%)
+}
+.title-ribbon .bigicon{font-size:31px;margin-right:12px}
+.find-btn{border:0;border-radius:28px;background:linear-gradient(100deg,#eee1ff,#eadbff);color:#3e1a8c;font-size:17px;font-weight:800;padding:12px 28px;cursor:pointer}
+.find-btn:hover{filter:brightness(.97)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 28px}
+.field label{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:800;color:#143c80;margin:0 0 8px 5px}
+.field .fi{font-size:22px}
+.input-wrap{display:flex;align-items:center;border:1.5px solid #c5d2df;border-radius:14px;overflow:hidden;height:58px;background:linear-gradient(100deg,#fff,#f7fbff);transition:.2s}
+.input-wrap:focus-within{border-color:#0a91ca;box-shadow:0 0 0 3px #0a91ca18}
+.iconbox{height:100%;width:68px;display:flex;align-items:center;justify-content:center;font-size:29px;flex:0 0 68px}
+.purple{background:#eee3ff;color:#5723c0}.green{background:#d9fae9;color:#0b8d5b}.blue{background:#d8f1ff;color:#0873c0}
+.orange{background:#fff0d1;color:#d87500}.pink{background:#ffe1eb;color:#e92d62}
+.input-wrap input,.input-wrap select{border:0;outline:0;background:transparent;width:100%;height:100%;padding:0 14px;font-size:18px;color:#62758f;min-width:0}
+.input-wrap select{appearance:auto}
+.actions{display:flex;gap:18px;margin-top:18px;flex-wrap:wrap}
+.actions button{height:68px;border:0;border-radius:14px;color:#fff;font-size:20px;font-weight:800;cursor:pointer;padding:0 28px;box-shadow:0 5px 10px #0002;display:flex;align-items:center;justify-content:center;gap:13px}
+.save{background:linear-gradient(100deg,#0aa65a,#13bd73);min-width:340px}.clear{background:linear-gradient(100deg,#ef1f4d,#f63863);min-width:225px}.print{background:linear-gradient(100deg,#104b91,#1b68ad);min-width:285px}
+.actions button:hover{transform:translateY(-1px);filter:brightness(1.03)}
+.illustration{position:absolute;right:25px;bottom:-2px;font-size:95px;opacity:.23;pointer-events:none}
+
+.list-panel{margin-top:20px}
+.list-head{background:linear-gradient(100deg,#5927b8,#4531b9 42%,#0cb3d1);padding:13px 18px;display:flex;align-items:center;gap:15px}
+.list-title{color:#fff;font-size:29px;font-weight:800;display:flex;align-items:center;gap:13px;flex:1}
+.search-area{display:flex;gap:12px;align-items:center}
+.search-wrap{width:535px;height:48px;background:#fff;border-radius:12px;display:flex;align-items:center;padding:0 15px;box-shadow:0 2px 6px #0002}
+.search-wrap span{font-size:26px;color:#0a4a87;margin-right:10px}.search-wrap input{border:0;outline:0;width:100%;font-size:16px;color:#415b78}
+.clear-search{height:48px;border:0;border-radius:12px;background:#5122af;color:#fff;padding:0 24px;font-size:16px;font-weight:800;cursor:pointer}
+.table-wrap{overflow:auto;padding:7px 9px 10px}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:1120px}
+th{background:linear-gradient(100deg,#073d83,#0b9eac);color:#fff;padding:14px 10px;border-right:1px solid #ffffff55;font-size:15px;white-space:nowrap}
+th:first-child{border-radius:10px 0 0 0}th:last-child{border-radius:0 10px 0 0}
+td{border-right:1px solid #d2dee8;border-bottom:1px solid #d2dee8;padding:11px 9px;text-align:center;font-size:15px;background:#fff}
+td:first-child{border-left:1px solid #d2dee8}
+tr:hover td{background:#f6fbff}
+.badge{display:inline-block;padding:7px 13px;border-radius:18px;font-weight:800;font-size:13px}
+.approved{background:#d8f6e3;color:#137440}.pending{background:#fff0c8;color:#8a6500}.rejected{background:#ffdadd;color:#a01d2c}
+.empty{text-align:center;padding:55px 20px;color:#1976bf;font-weight:800;font-size:21px}
+.empty .empty-icon{font-size:55px;display:block;margin-bottom:8px;opacity:.7}
+.footer{margin-top:20px;background:#06376e;color:#fff;min-height:60px;padding:14px 55px;display:flex;align-items:center;justify-content:space-between;font-size:16px}
+.footer .leaf{color:#76d82f;font-size:25px}
+
+@media(max-width:1050px){
+ .container{padding:0 12px 18px}.topbar{padding:15px 22px}.brand h1{font-size:28px}.nav{font-size:16px}.slogan{font-size:15px}.slogan .home{font-size:40px}
+ .grid{grid-template-columns:repeat(2,1fr)}.search-wrap{width:350px}
+}
+@media(max-width:700px){
+ .topbar{min-height:auto;flex-direction:column;gap:10px;text-align:center}.brand{justify-content:center}.logo{font-size:40px}.brand h1{font-size:24px}.nav{font-size:13px}.slogan{display:none}
+ .grid{grid-template-columns:1fr}.form-panel{padding:0 10px 15px}.title-ribbon{font-size:21px}.find-btn{font-size:13px;padding:9px 13px}
+ .list-head{flex-direction:column;align-items:stretch}.list-title{font-size:22px}.search-area{width:100%}.search-wrap{width:100%}
+ .actions button{width:100%;min-width:0}.footer{padding:12px 20px;font-size:12px}
+}
+@media print{
+ .topbar,.form-panel,.footer,.list-head,.del{display:none!important}
+ body{background:#fff}.container{padding:0}.panel{box-shadow:none;border:0;margin:0}
+ .table-wrap{padding:0}table{min-width:0}
+}
+
+.receipt-modal{display:none;position:fixed;inset:0;background:#0008;z-index:9999;align-items:center;justify-content:center;padding:20px}
+.receipt-card{width:100%;max-width:560px;background:#fff;border-radius:14px;box-shadow:0 18px 55px #0005;overflow:hidden;border:1px solid #d7e2ec}
+.receipt-head{background:#fff;color:#06356f;padding:22px 24px 16px;text-align:center;border-bottom:2px dashed #b9c9d8}
+.receipt-head h2{margin:0;font-size:25px;font-weight:900}.receipt-head small{display:block;margin-top:5px;color:#6b7d90;font-weight:700}
+.receipt-body{padding:20px 24px}.receipt-row{display:grid;grid-template-columns:1fr 1.2fr;gap:15px;padding:12px 0;border-bottom:1px solid #e3ebf2;font-size:15px}.receipt-row b:last-child{text-align:right;color:#173e70}
+.approved-stamp{text-align:center;margin:4px 0 18px;color:#138247;font-weight:900;font-size:19px;border:2px solid #138247;border-radius:8px;padding:7px;background:#effbf4}
+.receipt-actions{display:flex;gap:10px;padding:0 24px 24px}.receipt-actions button{flex:1;border:0;border-radius:9px;padding:12px;font-weight:800;cursor:pointer}
+.receipt-print{background:#0a5da8;color:#fff}.receipt-close{background:#eee;color:#333}
+.status-select{border:0;border-radius:18px;padding:7px 11px;font-weight:800;cursor:pointer;outline:0}
+.status-select.pending{background:#fff0c8;color:#8a6500}.status-select.approved{background:#d8f6e3;color:#137440}.status-select.rejected{background:#ffdadd;color:#a01d2c}
+.receipt-btn{border:0;background:#eee3ff;color:#5122af;border-radius:9px;padding:8px 11px;font-weight:800;cursor:pointer}
+
+.send-process-select{border:0;border-radius:18px;padding:7px 11px;font-weight:800;cursor:pointer;outline:0;background:#fff0c8;color:#8a6500}.send-process-select.sent{background:#d8f6e3;color:#137440}
+.login-overlay{
+  position:fixed;inset:0;z-index:100000;background:linear-gradient(135deg,#062f68,#087fd3 55%,#16b7d5);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.login-card{
+  width:100%;max-width:430px;background:#fff;border-radius:22px;padding:30px 28px;
+  box-shadow:0 20px 70px #001b3d66;text-align:center;
+}
+.login-icon{font-size:58px;line-height:1;margin-bottom:8px}
+.login-card h2{margin:0;color:#06356f;font-size:30px}
+.login-card p{margin:8px 0 22px;color:#62758f;font-weight:700}
+.mpin-wrap{display:flex;align-items:center;border:2px solid #c5d2df;border-radius:14px;height:58px;overflow:hidden}
+.mpin-wrap:focus-within{border-color:#087fd3;box-shadow:0 0 0 3px #087fd318}
+.mpin-wrap span{width:62px;height:100%;display:flex;align-items:center;justify-content:center;background:#eee3ff;font-size:25px}
+.mpin-wrap input{border:0;outline:0;width:100%;height:100%;padding:0 15px;font-size:21px;letter-spacing:5px;text-align:center}
+.login-btn{width:100%;height:56px;border:0;border-radius:13px;margin-top:16px;background:linear-gradient(100deg,#087fd3,#0ba55b);color:#fff;font-size:19px;font-weight:800;cursor:pointer}
+.login-error{min-height:22px;margin-top:10px;color:#ed2450;font-weight:800;font-size:14px}
+.login-note{font-size:12px;color:#8091a5;margin-top:14px}
+body.login-locked{overflow:hidden}
+</style>
+</head>
+<body class="login-locked">
+
+<div id="loginOverlay" class="login-overlay">
+  <div class="login-card">
+    <div class="login-icon">🔐</div>
+    <h2>Login Access</h2>
+    <p>Enter MPIN to continue</p>
+    <div class="mpin-wrap">
+      <span>🔑</span>
+      <input id="loginMpin" type="password" inputmode="numeric" maxlength="6"
+             placeholder="Enter 6 Digit MPIN" autocomplete="off"
+             onkeydown="if(event.key==='Enter')loginAccess()">
+    </div>
+    <button class="login-btn" type="button" onclick="loginAccess()">🔓 Login Access</button>
+    <div id="loginError" class="login-error"></div>
+    <div class="login-note">Authorized access only</div>
+  </div>
+</div>
+
+<div class="container">
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">🌾</div>
+    <div>
+      <h1>Ration <span>Work Process Data</span></h1>
+      <div class="nav">Ration Card <span>|</span> Customer Details <span>|</span> Online Process</div>
+    </div>
+  </div>
+  <div class="slogan"><span class="home">🏠</span>सुरक्षित राशन<br><b>समृद्ध परिवार</b></div>
+</header>
+
+<section class="panel form-panel">
+  <div class="section-title">
+    <div class="title-ribbon"><span class="bigicon">🔍</span>Search Customer Details</div>
+    <button class="find-btn" type="button" onclick="focusSearch()">👤 &nbsp;Find Customer Information</button>
+  </div>
+
+  <div class="grid">
+    <div class="field"><label><span class="fi">👤</span>Customer Name</label><div class="input-wrap"><span class="iconbox purple">👤</span><input id="customerName" type="text" placeholder="Customer Name"></div></div>
+    <div class="field"><label><span class="fi">🪪</span>Ration Number</label><div class="input-wrap"><span class="iconbox green">🪪</span><input id="rationNumber" type="text" inputmode="numeric" maxlength="12" value="214440" placeholder="214440 + Number" oninput="normalizeRationNumber(this)"></div></div>
+    <div class="field"><label><span class="fi">📱</span>Customer Mobile No</label><div class="input-wrap"><span class="iconbox blue">📱</span><input id="mobileNo" type="tel" inputmode="numeric" maxlength="10" placeholder="10 Digit Mobile Number"></div></div>
+    <div class="field"><label><span class="fi">🏢</span>Unit Number</label><div class="input-wrap"><span class="iconbox orange">🏢</span><input id="unitNumber" type="number" min="0" placeholder="Unit Number"></div></div>
+    <div class="field"><label><span class="fi">🔄</span>New / Correction</label><div class="input-wrap"><span class="iconbox purple">🔄</span><select id="rationType"><option value="">Select Option</option><option>New</option><option>Correction</option></select></div></div>
+    <div class="field"><label><span class="fi">📅</span>Send Date</label><div class="input-wrap"><span class="iconbox pink">📅</span><select id="sendProcess" onchange="handleSendProcess()"><option value="Wait">Wait</option><option value="Forward">Forward</option></select></div><div id="sendDateTimeDisplay" style="font-size:13px;font-weight:800;color:#0873c0;margin:7px 5px 0">Not Forwarded Yet</div></div>
+    <div class="field"><label><span class="fi">📋</span>Status</label><div class="input-wrap"><span class="iconbox green">☷</span><select id="status"><option>Pending</option><option>Approved</option><option>Rejected</option></select></div></div>
+  </div>
+
+  <div class="actions">
+    <button class="save" onclick="saveRecord()">📄✓ &nbsp; Save Online Form <b>›</b></button>
+    <button class="clear" onclick="clearForm()">❌ &nbsp; Clear <b>›</b></button>
+    <button class="print" onclick="window.print()">🖨️ &nbsp; Print List <b>›</b></button>
+  </div>
+  <div class="illustration">🪪🌾</div>
+</section>
+
+<section class="panel list-panel">
+  <div class="list-head">
+    <div class="list-title">📋 &nbsp;Ration Work Process List</div>
+    <div class="search-area">
+      <div class="search-wrap"><span>⌕</span><input id="searchBox" type="search" placeholder="Search Customer / Mobile / Ration Number..." oninput="renderList()"></div>
+      <button class="clear-search" type="button" onclick="clearSearch()">🔍 &nbsp;Clear Search</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Sr. No</th><th>👤 Customer Name</th><th>📱 Customer Mobile No</th><th>🪪 Ration Number</th>
+        <th>🏢 Unit Number</th><th>🔄 New / Correction</th><th>📅 Send Date</th><th>🛡️ Status</th><th>✅ Approved Date</th><th>🧾 Receipt</th>
+      </tr></thead>
+      <tbody id="listBody"></tbody>
+    </table>
+    <div id="empty" class="empty"><span class="empty-icon">📄🔍</span>Abhi koi record nahi hai.</div>
+  </div>
+</section>
+
+
+<div id="receiptModal" class="receipt-modal" onclick="if(event.target===this) closeReceipt()">
+  <div class="receipt-card">
+    <div class="receipt-head">
+      <h2>🧾 Ration Work Receipt</h2>
+      <small>Dummy / Record Receipt</small>
+    </div>
+    <div class="receipt-body" id="receiptBody"></div>
+    <div class="receipt-actions">
+      <button class="receipt-print" onclick="printReceipt()">🖨️ Print Receipt</button>
+      <button class="receipt-close" onclick="closeReceipt()">✖ Close</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div>🛡️ &nbsp; Ration Department &nbsp; | &nbsp; Digital Service for Better Tomorrow</div>
+  <div><span class="leaf">🌿</span> Sarkar Ki Seva</div>
+</footer>
+</div>
+
+<script>
+
+const LOGIN_MPIN="785805";
+function loginAccess(){
+  const input=document.getElementById("loginMpin");
+  const error=document.getElementById("loginError");
+  if(input.value===LOGIN_MPIN){
+    document.getElementById("loginOverlay").style.display="none";
+    document.body.classList.remove("login-locked");
+    sessionStorage.setItem("rationLoginAccess","1");
+    error.textContent="";
+  }else{
+    error.textContent="गलत MPIN — Access Denied";
+    input.value="";
+    input.focus();
+  }
+}
+function checkLoginAccess(){
+  if(sessionStorage.getItem("rationLoginAccess")==="1"){
+    document.getElementById("loginOverlay").style.display="none";
+    document.body.classList.remove("login-locked");
+  }else{
+    document.getElementById("loginOverlay").style.display="flex";
+    document.body.classList.add("login-locked");
+    setTimeout(()=>document.getElementById("loginMpin").focus(),100);
+  }
+}
+let records=JSON.parse(localStorage.getItem("rationWorkRecords")||"[]"),receiptRecord=null;
+function val(id){return document.getElementById(id).value.trim()}
+function nowDateTime(){
+  let d=new Date(),p=n=>String(n).padStart(2,"0");
+  return `${p(d.getDate())}/${p(d.getMonth()+1)}/${d.getFullYear()} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+}
+function handleSendProcess(){
+  const v=document.getElementById("sendProcess").value;
+  document.getElementById("sendDateTimeDisplay").textContent =
+    v==="Forward" ? "Forward Date & Time: "+nowDateTime() : "Not Forwarded Yet";
+}
+function normalizeRationNumber(el){
+  let v=String(el.value||"").replace(/\D/g,"");
+  if(!v.startsWith("214440")) v="214440"+v.replace(/^214440/,"");
+  el.value=v.slice(0,12);
+}
+function saveRecord(){
+  const process=val("sendProcess");
+  const r={
+    customerName:val("customerName"),
+    rationNumber:val("rationNumber"),
+    mobileNo:val("mobileNo"),
+    unitNumber:val("unitNumber"),
+    rationType:val("rationType"),
+    sendProcess:process,
+    sentDate:process==="Forward"?nowDateTime():"",
+    status:val("status"),
+    approvedDate:""
+  };
+  if(!r.customerName||!r.rationNumber){alert("Customer Name aur Ration Number bhariye.");return}
+  if(!/^214440\d{0,6}$/.test(r.rationNumber)){
+    alert("Ration Number 214440 se start hona chahiye aur total 12 digit se zyada nahi ho sakta.");
+    return;
+  }
+  if(r.mobileNo&&!/^\d{10}$/.test(r.mobileNo)){alert("Customer Mobile No 10 digit ka bhariye.");return}
+  if(r.status==="Approved")r.approvedDate=nowDateTime();
+  records.push(r);
+  localStorage.setItem("rationWorkRecords",JSON.stringify(records));
+  clearForm();renderList();alert("Record save ho gaya.");
+}
+function clearForm(){
+  ["customerName","mobileNo","unitNumber","rationType"].forEach(id=>document.getElementById(id).value="");document.getElementById("rationNumber").value="214440";
+  document.getElementById("sendProcess").value="Wait";
+  document.getElementById("sendDateTimeDisplay").textContent="Not Forwarded Yet";
+  document.getElementById("status").value="Pending";
+}
+// Only Approved makes the saved record final.
+// Forward date is fixed, but Status can still be changed until Approved.
+function isFinalized(r){
+  return r.status==="Approved";
+}
+function changeStatus(i,v){
+  let r=records[i];
+  if(r.status==="Approved"){
+    alert("यह Record Approved हो चुका है। अब Status या कोई जानकारी बदली नहीं जा सकती।");
+    renderList();
+    return;
+  }
+  r.status=v;
+  if(v==="Approved"){
+    // Approved date is created once and never overwritten.
+    r.approvedDate=r.approvedDate||nowDateTime();
+  }else{
+    r.approvedDate="";
+  }
+  localStorage.setItem("rationWorkRecords",JSON.stringify(records));
+  renderList();
+  if(v==="Approved")openReceipt(i)
+}
+function changeSendProcess(i,v){
+  let r=records[i];
+
+  // Approved records are completely final.
+  if(r.status==="Approved"){
+    alert("यह Record Approved हो चुका है। अब इसमें कोई बदलाव नहीं किया जा सकता।");
+    renderList();
+    return;
+  }
+
+  // Once Forward date is created, it stays fixed.
+  // Forward can be selected only once; it cannot be changed back to Wait.
+  if(r.sentDate || r.sendProcess==="Forward"){
+    r.sendProcess="Forward";
+    if(!r.sentDate) r.sentDate=nowDateTime();
+  }else if(v==="Forward"){
+    r.sendProcess="Forward";
+    r.sentDate=nowDateTime();
+  }else{
+    r.sendProcess="Wait";
+    r.sentDate="";
+  }
+
+  localStorage.setItem("rationWorkRecords",JSON.stringify(records));
+  renderList();
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+function statusClass(s){return s==="Approved"?"approved":s==="Rejected"?"rejected":"pending"}
+function openReceipt(i){
+  let r=records[i];
+  receiptRecord=r;
+  document.getElementById("receiptBody").innerHTML=`
+    <div class="approved-stamp">✓ APPROVED</div>
+    <div class="receipt-row"><b>Customer Name</b><b>${esc(r.customerName)}</b></div>
+    <div class="receipt-row"><b>Ration Number</b><b>${esc(r.rationNumber)}</b></div>
+    <div class="receipt-row"><b>Mobile Number</b><b>${esc(r.mobileNo)}</b></div>
+    <div class="receipt-row"><b>Unit Number</b><b>${esc(r.unitNumber)}</b></div>
+    <div class="receipt-row"><b>Type</b><b>${esc(r.rationType)}</b></div>
+    <div class="receipt-row"><b>Forward Date</b><b>${esc(r.sentDate||"—")}</b></div>
+    <div class="receipt-row"><b>Approved Date</b><b>${esc(r.approvedDate||"—")}</b></div>`;
+  document.getElementById("receiptModal").style.display="flex"
+}
+function closeReceipt(){document.getElementById("receiptModal").style.display="none"}
+function printReceipt(){
+  if(!receiptRecord)return;
+  let r=receiptRecord,w=window.open("","_blank","width=650,height=800");
+  w.document.write(`<html><head><title>Ration Work Bill</title><style>
+  body{font-family:Arial;margin:0;background:#f3f7fa;padding:25px;color:#18355e}
+  .bill{max-width:560px;margin:auto;background:#fff;border:1px solid #d6e1eb;border-radius:12px;overflow:hidden}
+  .head{text-align:center;padding:22px;border-bottom:2px dashed #b9c9d8}
+  .head h2{margin:0;color:#06356f}.head small{color:#6b7d90}
+  .ok{margin:18px 24px;text-align:center;border:2px solid #138247;color:#138247;background:#effbf4;padding:8px;border-radius:8px;font-weight:900}
+  .row{display:grid;grid-template-columns:1fr 1.2fr;padding:11px 24px;border-bottom:1px solid #e4ebf1}.row b:last-child{text-align:right}
+  .foot{text-align:center;padding:18px;font-size:12px;color:#718096}
+  </style></head><body><div class="bill">
+  <div class="head"><h2>🧾 Ration Work Bill</h2><small>Ration Work Process Record</small></div>
+  <div class="ok">✓ APPROVED</div>
+  <div class="row"><b>Customer Name</b><b>${esc(r.customerName)}</b></div>
+  <div class="row"><b>Ration Number</b><b>${esc(r.rationNumber)}</b></div>
+  <div class="row"><b>Mobile Number</b><b>${esc(r.mobileNo)}</b></div>
+  <div class="row"><b>Unit Number</b><b>${esc(r.unitNumber)}</b></div>
+  <div class="row"><b>Type</b><b>${esc(r.rationType)}</b></div>
+  <div class="row"><b>Forward Date</b><b>${esc(r.sentDate||"—")}</b></div>
+  <div class="row"><b>Approved Date</b><b>${esc(r.approvedDate||"—")}</b></div>
+  <div class="foot">Thank you • Ration Work Process</div>
+  </div><script>window.onload=()=>window.print()<\/script></body></html>`);
+  w.document.close();
+}
+function renderList(){
+  let body=document.getElementById("listBody"),
+      q=document.getElementById("searchBox").value.trim().toLowerCase();
+  body.innerHTML="";
+  let n=0;
+
+  records.forEach((r,i)=>{
+    // Compatibility for older saved records
+    if(r.sendProcess==="Sent Form")r.sendProcess="Forward";
+    if(r.sendProcess==="Wait Process")r.sendProcess="Wait";
+    if(!r.sendProcess)r.sendProcess=r.sentDate?"Forward":"Wait";
+    if(r.rationType==="New Ration")r.rationType="New";
+    if(r.rationType==="Correction Ration")r.rationType="Correction";
+
+    let x=[
+      r.customerName,r.mobileNo,r.rationNumber,r.unitNumber,
+      r.rationType,r.sentDate,r.sendProcess,r.status,r.approvedDate
+    ].join(" ").toLowerCase();
+
+    if(q&&!x.includes(q))return;
+    n++;
+
+    body.insertAdjacentHTML("beforeend",`
+      <tr>
+        <td>${n}</td>
+        <td>${esc(r.customerName)}</td>
+        <td>${esc(r.mobileNo)}</td>
+        <td>${esc(r.rationNumber)}</td>
+        <td>${esc(r.unitNumber)}</td>
+        <td>
+          <select class="send-process-select ${r.rationType==="New"?"sent":""}"
+                  ${isFinalized(r)?"disabled":""} onchange="changeRationType(${i},this.value)">
+            <option ${r.rationType==="New"?"selected":""}>New</option>
+            <option ${r.rationType==="Correction"?"selected":""}>Correction</option>
+          </select>
+        </td>
+        <td>
+          <select class="send-process-select ${r.sendProcess==="Forward"?"sent":""}"
+                  ${isFinalized(r)?"disabled":""} onchange="changeSendProcess(${i},this.value)">
+            <option ${r.sendProcess==="Wait"?"selected":""}>Wait</option>
+            <option ${r.sendProcess==="Forward"?"selected":""}>Forward</option>
+          </select>
+          ${r.sentDate?`<div style="font-size:12px;font-weight:700;margin-top:4px">${esc(r.sentDate)}</div>
+          `:""}
+        </td>
+        <td>
+          <select class="status-select ${statusClass(r.status)}" ${isFinalized(r)?"disabled":""} onchange="changeStatus(${i},this.value)">
+            <option ${r.status==="Pending"?"selected":""}>Pending</option>
+            <option ${r.status==="Approved"?"selected":""}>Approved</option>
+            <option ${r.status==="Rejected"?"selected":""}>Rejected</option>
+          </select>
+        </td>
+        <td>${r.approvedDate?esc(r.approvedDate):"—"}</td>
+        <td>${r.status==="Approved"?`<button class="receipt-btn" onclick="openReceipt(${i})">🧾 Receipt</button>`:"—"}</td>
+      </tr>`);
+  });
+
+  localStorage.setItem("rationWorkRecords",JSON.stringify(records));
+  document.getElementById("empty").style.display=n?"none":"block";
+}
+function changeRationType(i,v){
+  let r=records[i];
+  if(r.status==="Approved"){
+    alert("यह Record Approved हो चुका है। अब इसमें कोई बदलाव नहीं किया जा सकता।");
+    renderList();
+    return;
+  }
+  r.rationType=v;
+  localStorage.setItem("rationWorkRecords",JSON.stringify(records));
+  renderList();
+}
+function clearSearch(){document.getElementById("searchBox").value="";renderList()}function focusSearch(){document.getElementById("searchBox").focus();document.querySelector(".list-panel").scrollIntoView({behavior:"smooth",block:"center"})}renderList();
+checkLoginAccess();
+</script>
+</body>
+</html>
